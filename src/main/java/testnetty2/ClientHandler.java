@@ -1,9 +1,14 @@
 package testnetty2;
 
+import com.alibaba.fastjson.JSONObject;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.CharsetUtil;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class ClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
@@ -14,7 +19,20 @@ public class ClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        ctx.writeAndFlush(System.in);
+        //while true 能一直输入消息，但是服务端返回消息打印不出来
+//        while (true) {
+            //system.in会一直阻塞，导致其他事件消息无法打印
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            StringBuilder msg = new StringBuilder();
+            String  body = null;
+            if ((body = reader.readLine()) != null) {
+                msg.append(body);
+            }
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("name", ctx.channel().localAddress().toString());
+            jsonObject.put("content", msg.toString());
+            ctx.writeAndFlush(Unpooled.copiedBuffer(jsonObject.toJSONString(), CharsetUtil.UTF_8));
+//        }
     }
 
     @Override
