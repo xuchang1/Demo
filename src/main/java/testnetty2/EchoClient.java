@@ -1,22 +1,28 @@
 package testnetty2;
 
+import com.alibaba.fastjson.JSONObject;
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.util.CharsetUtil;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 
-public class ClientA {
+public class EchoClient {
 
     private String host;
 
     private int port;
 
-    public ClientA(String host, int port) {
+    public EchoClient(String host, int port) {
         this.host = host;
         this.port = port;
     }
@@ -37,7 +43,15 @@ public class ClientA {
                     });
 
             ChannelFuture channelFuture = b.connect().sync();
-            channelFuture.channel().closeFuture().sync();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            Channel channel = channelFuture.channel();
+            JSONObject jsonObject = new JSONObject();
+            while (true) {
+                jsonObject.put("name", channel.localAddress().toString());
+                jsonObject.put("content", reader.readLine());
+                channel.writeAndFlush(Unpooled.copiedBuffer(jsonObject.toJSONString(), CharsetUtil.UTF_8));
+            }
+//            channelFuture.channel().closeFuture().sync();
         } finally {
             group.shutdownGracefully();
         }
@@ -56,6 +70,6 @@ public class ClientA {
             }
         }
 
-        new ClientA(host, port).start();
+        new EchoClient(host, port).start();
     }
 }

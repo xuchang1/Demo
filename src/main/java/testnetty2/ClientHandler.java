@@ -17,7 +17,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
         System.out.println(msg.toString(CharsetUtil.UTF_8));
     }
 
-    @Override
+    /*@Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         //while true 能一直输入消息，但是服务端返回消息打印不出来
 //        while (true) {
@@ -33,7 +33,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
             jsonObject.put("content", msg.toString());
             ctx.writeAndFlush(Unpooled.copiedBuffer(jsonObject.toJSONString(), CharsetUtil.UTF_8));
 //        }
-    }
+    }*/
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
