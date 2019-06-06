@@ -11,7 +11,7 @@ public class Server {
     }
 
     private void start() throws IOException {
-        new serverHandler(port).run();
+       new Thread( new serverHandler(port)).start();
     }
 
     public static void main(String[] args) throws IOException {

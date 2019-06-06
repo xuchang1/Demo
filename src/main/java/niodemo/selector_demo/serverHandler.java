@@ -43,16 +43,27 @@ public class serverHandler implements Runnable {
                 if (it.hasNext()) {
                     SelectionKey key = it.next();
                     it.remove();
-                    handler(key);
+                    try {
+                        handler(key);
+                    } catch (Exception e) {
+                        if (key != null) {
+                            key.cancel();
+                        }
+                        if (key.channel() != null) {
+                            key.channel().close();
+                        }
+                        e.printStackTrace();
+                    }
                 }
             }
+
         } catch (IOException e) {
             e.printStackTrace();
-            try {
-                handlerClose();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+        }
+        try {
+            handlerClose();
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
     }
 
@@ -74,8 +85,12 @@ public class serverHandler implements Runnable {
 
                 SocketChannel channel = (SocketChannel) key.channel();
                 ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
-                while ((channel.read(byteBuffer)) != -1) {
-
+                int readbytes;
+                while (true) {
+                    readbytes = channel.read(byteBuffer);
+                    if (readbytes <= 0) {
+                        break;
+                    }
                     byteBuffer.flip();
                     byte[] bytes = new byte[byteBuffer.remaining()];
                     byteBuffer.get(bytes);

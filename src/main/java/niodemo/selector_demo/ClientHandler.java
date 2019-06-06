@@ -1,8 +1,6 @@
 package niodemo.selector_demo;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -11,7 +9,7 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 
-public class ClientHandler implements Runnable{
+public class ClientHandler implements Runnable {
 
     private String host;
 
@@ -45,13 +43,32 @@ public class ClientHandler implements Runnable{
                 if (it.hasNext()) {
                     SelectionKey key = it.next();
                     it.remove();
+                    try {
+                        handler(key);
+                    } catch (Exception e) {
+                        if (key != null) {
+                            key.cancel();
+                        }
 
-                    handler(key);
+                        if (key.channel() != null) {
+                            key.channel().close();
+                        }
+
+                        e.printStackTrace();
+                    }
                 }
             }
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        if (selector != null) {
+            try {
+                selector.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -59,17 +76,27 @@ public class ClientHandler implements Runnable{
         if (key.isValid()) {
             if (key.isConnectable()) {
                 SocketChannel channel = (SocketChannel) key.channel();
+                if (channel.isConnectionPending()) {
+                    channel.finishConnect();
+                }
+
                 channel.configureBlocking(false);
                 channel.register(selector, SelectionKey.OP_READ);
 
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                String body = null;
-                while ((body = reader.readLine()) != null) {
-                    System.out.println("输入内容 : " + body);
-                    channel.write(ByteBuffer.wrap(body.getBytes()));
-                }
+                channel.write(ByteBuffer.wrap(("连接远程服务器").getBytes()));
+                //启动线程，进行聊天输入
+                new Thread(new say(channel)).start();
             } else if (key.isReadable()) {
                 SocketChannel channel = (SocketChannel) key.channel();
+
+                ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+                channel.read(byteBuffer);
+
+                byteBuffer.flip();
+                byte[] bytes = new byte[byteBuffer.limit()];
+                byteBuffer.get(bytes);
+
+                System.out.println(new String(bytes));
             }
         }
     }

@@ -12,12 +12,11 @@ public class client {
     }
 
     private void start() {
-        new ClientHandler(host, port).run();
+        new Thread(new ClientHandler(host, port)).start();
     }
 
     public static void main(String[] args) {
         String host = "127.0.0.1";
-
         int port = 8080;
 
         new client(host, port).start();
