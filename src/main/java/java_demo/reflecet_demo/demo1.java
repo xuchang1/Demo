@@ -1,7 +1,5 @@
 package java_demo.reflecet_demo;
 
-import java.lang.reflect.Constructor;
-
 /**
  * 通过反射获取构造方法，测试Constructor相关方法
  *

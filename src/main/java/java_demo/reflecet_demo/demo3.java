@@ -4,7 +4,7 @@ package java_demo.reflecet_demo;
  * 通过反射获取类中方法
  *
  * class对象获取类中方法
- *      1、getMethods() : 获取该类及父类中的public方法
+ *      1、getMethods() : 获取该类及父类中的public方法(数组中顺序随机，和方法在类中顺序无关)
  *      2、getMethod(String name, Class<?>...parameterTypes) : 根据方法名称及参数class类型，获取相应public方法(包括父类中)
  *      3、getDeclaredMethods() : 获取本类中的所有方法
  *      4、getDeclaredMethod(String name, Class<?>...parameterTypes) : 根据方法名称及参数class类型，获取相应public方法

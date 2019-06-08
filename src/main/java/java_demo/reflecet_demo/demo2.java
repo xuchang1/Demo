@@ -2,7 +2,7 @@ package java_demo.reflecet_demo;
 
 /**
  * 通过class获取成员变量
- *      1、getFields() : 获取public的成员变量(包括父类中的)
+ *      1、getFields() : 获取public的成员变量(包括父类中的)(返回数组顺序和参数在方法中的顺序一致)
  *      2、getField(String name) : 根据名称获取public成员变量(包括父类中的))
  *      3、getDeclaredFields() : 获取本类中的所有成员变量
  *      3、getDeclaredField(String name) : 根据名称获取本类中的成员变量
