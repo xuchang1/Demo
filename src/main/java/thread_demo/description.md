@@ -25,3 +25,11 @@ demo26 : synchronized同步监视String字符串时，注意String常量池缓�
 demo27 : 死锁。main方法中，如果不休眠，则不会产生死锁，why？
 
 demo28 : 修改同步对象的属性，只要对象不变，就不会改变同步的结果。
+
+demo29 : volatile : 强制从公共堆栈中取得变量的值，而不是从线程私有栈中取得变量的值。
+
+demo30 : volatile只能保证变量的可见性，不能保证操作的原子性.
+
+demo31 : AtomicInteger : 原子类，保证以原子的方式更新int值.
+
+demo32 : 原子类只能保证操作的原子性，不能保证其有序性。
