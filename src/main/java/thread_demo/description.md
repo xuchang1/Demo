@@ -33,3 +33,5 @@ demo30 : volatile只能保证变量的可见性，不能保证操作的原子性
 demo31 : AtomicInteger : 原子类，保证以原子的方式更新int值.
 
 demo32 : 原子类只能保证操作的原子性，不能保证其有序性。
+
+demo33 : Object类的wait()、notify()方法在线程中的使用。
