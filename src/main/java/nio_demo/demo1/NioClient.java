@@ -28,11 +28,11 @@ public class NioClient {
                 if (key.isConnectable()) {
                     if (channel.isConnectionPending()) {
                         if (channel.finishConnect()) {
-                            /*channel.write(ByteBuffer.wrap("1234".getBytes()));
+                            channel.write(ByteBuffer.wrap("1234".getBytes()));
                             System.out.println(System.currentTimeMillis() + "发送数据 : 1234");
                             Thread.sleep(5000);
                             System.out.println(System.currentTimeMillis() + "发送数据 : 5678");
-                            channel.write(ByteBuffer.wrap("5678".getBytes()));*/
+                            channel.write(ByteBuffer.wrap("5678".getBytes()));
                         }
                     } else {
                         channel.connect(new InetSocketAddress("127.0.0.1", 8081));
