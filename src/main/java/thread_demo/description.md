@@ -52,3 +52,5 @@ demo40 : InheritableThreadLocal使用。
 demo41 : ReentrantLock使用。
 
 demo42 : Condition调用await、signal方法进行等待、唤醒。
+
+demo43 : new ReentrantLock(true) : 公平锁；new ReentrantLock(false) : 非公平锁。
