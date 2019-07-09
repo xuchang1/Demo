@@ -58,3 +58,5 @@ demo43 : new ReentrantLock(true) : 公平锁；new ReentrantLock(false) : 非公
 demo44 : tryLock(),tryLock(long timeout,TimeUnit unit)方法。
 
 demo45 : 使用Condition实现顺序执行任务.
+
+demo46-49 : ReentrantReadWriteLock，读写锁，读读之间不互斥，读写、写读、写写之间互斥。
