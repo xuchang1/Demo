@@ -60,3 +60,5 @@ demo44 : tryLock(),tryLock(long timeout,TimeUnit unit)方法。
 demo45 : 使用Condition实现顺序执行任务.
 
 demo46-49 : ReentrantReadWriteLock，读写锁，读读之间不互斥，读写、写读、写写之间互斥。
+
+demo50 : 定时器timer的schedule方法。
