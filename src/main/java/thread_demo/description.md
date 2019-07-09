@@ -41,3 +41,7 @@ demo34 : 生产消费者模式 : 一生产者与一消费者。
 demo35 : 生产消费者模式 : 多生产者与多消费者，可能出现假死，通过notifyAll()进行唤醒解决该问题。
 
 demo37 : join方法
+
+demo38 : 线程局部变量ThreadLocal的使用
+
+demo39 : ThreadLocal初始化值的设置，重写initialValue()的方法，不同的线程获取的初始化值可能不一样，在get方法获取值时，如果未set，才回去调用初始化方法返回初始化值。
