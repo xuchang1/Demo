@@ -44,4 +44,5 @@ demo37 : join方法
 
 demo38 : 线程局部变量ThreadLocal的使用
 
-demo39 : ThreadLocal初始化值的设置，重写initialValue()的方法，不同的线程获取的初始化值可能不一样，在get方法获取值时，如果未set，才回去调用初始化方法返回初始化值。
+demo39 : ThreadLocal初始化值的设置，重写initialValue()的方法，不同的线程获取的初始化值可能不一样。
+            在get方法获取值时，如果未set，才会去调用初始化方法返回初始化值。多次调用，返回的初始化值可能不同。
