@@ -5,13 +5,17 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.CharsetUtil;
+import utils.tools;
 
 public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        ctx.writeAndFlush(Unpooled.copiedBuffer("Hello World!", CharsetUtil.UTF_8));
-        System.out.println("The Echo Client send : Hello World!");
+        int a = 1234;
+//        byte[] bytes = tools.transferBytes(a);
+//        ctx.writeAndFlush(Unpooled.copiedBuffer(bytes);
+        ctx.writeAndFlush(Unpooled.copiedBuffer(a + "", CharsetUtil.UTF_8));
+        System.out.println("The Echo Client send msg");
     }
 
     protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {

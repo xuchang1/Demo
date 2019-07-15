@@ -1,5 +1,8 @@
+import sun.nio.cs.UTF_32;
+import sun.text.normalizer.UTF16;
 import utils.tools;
 
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -25,6 +28,21 @@ public class demo {
         /*SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println(simpleDateFormat.format(new Date()));*/
 
-        System.out.println(tools.transferDate(""));
+//        System.out.println(tools.transferDate(""));
+
+
+        long a = 192;
+        byte[] bytes = new byte[4];
+        bytes[0] = (byte) ((a & 0xff000000) >>24);
+        bytes[1] = (byte) ((a & 0xff0000) >>16);
+        bytes[2] = (byte) ((a & 0xff00) >>8);
+        bytes[3] = (byte) (a & 0xff);
+
+        System.out.println(new String(bytes));
+
+        /*String  a = "中国";
+        byte[] bytes = a.getBytes();
+        System.out.println(bytes.length);
+        System.out.println(new String(bytes));*/
     }
 }

@@ -17,4 +17,14 @@ public class tools {
         }
         return null;
     }
+
+    public static byte[] transferBytes(int a) {
+        byte[] bytes = new byte[4];
+        bytes[0] = (byte) ((a & 0xff00000) >> 24);
+        bytes[1] = (byte) ((a & 0xff000) >> 16);
+        bytes[2] = (byte) ((a & 0xff0) >> 8);
+        bytes[3] = (byte) (a & 0xff);
+
+        return bytes;
+    }
 }

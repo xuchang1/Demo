@@ -16,6 +16,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf buf = (ByteBuf) msg;
         System.out.println("The Time Server Received :" + buf.toString(CharsetUtil.UTF_8));
+//        System.out.println("The Time Server Received :" + buf.readInt());
         ctx.write(buf);
     }
 
