@@ -1,3 +1,5 @@
+import io.netty.util.NettyRuntime;
+import io.netty.util.internal.SystemPropertyUtil;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.Charset;
@@ -23,6 +25,7 @@ public class demo2 {
 
     @Test
     public void test3() {
-
+        System.out.println(SystemPropertyUtil.getInt(
+                "io.netty.eventLoopThreads", NettyRuntime.availableProcessors() * 2));
     }
 }
