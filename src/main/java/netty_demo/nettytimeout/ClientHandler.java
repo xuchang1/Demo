@@ -15,7 +15,8 @@ public class ClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        ctx.channel().writeAndFlush(Unpooled.copiedBuffer("nihao", CharsetUtil.UTF_8));
+        ByteBuf byteBuf = Unpooled.copiedBuffer("nihao", CharsetUtil.UTF_8);
+        ctx.channel().writeAndFlush(byteBuf);
     }
 
     @Override

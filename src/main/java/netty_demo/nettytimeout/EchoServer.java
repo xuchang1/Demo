@@ -36,7 +36,7 @@ public class EchoServer {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             //IdleStateHandler监控服务端读写超时时间
-                            ch.pipeline().addLast(new IdleStateHandler(10, 8, 7, TimeUnit.SECONDS));
+                            ch.pipeline().addLast(new IdleStateHandler(0, 0, 5, TimeUnit.SECONDS));
                             ch.pipeline().addLast(new EchoServerHandler());
                         }
                     });
