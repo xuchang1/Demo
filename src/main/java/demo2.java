@@ -1,10 +1,16 @@
 import io.netty.util.NettyRuntime;
 import io.netty.util.internal.SystemPropertyUtil;
 import org.junit.jupiter.api.Test;
+import thread_demo.demo20.Task;
 
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 
 public class demo2 {
+    public boolean flag = true;
+
+    public static int x = 0, y = 0;
 
     @Test
     public void test1() {
@@ -24,8 +30,68 @@ public class demo2 {
     }
 
     @Test
-    public void test3() {
-        System.out.println(SystemPropertyUtil.getInt(
-                "io.netty.eventLoopThreads", NettyRuntime.availableProcessors() * 2));
+    public void test3() throws InterruptedException {
+        (new Thread() {
+            @Override
+            public void run() {
+                System.out.println("线程1执行 : ");
+                while (flag) {}
+                System.out.println("线程1执行结束");
+            }
+        }).start();
+
+        Thread.sleep(2000);
+
+//        flag = false;
+        (new Thread() {
+            @Override
+            public void run() {
+                System.out.println("线程2执行 : ");
+                flag = false;
+                System.out.println("线程2执行结束");
+            }
+        }).start();
+    }
+
+    @Test
+    public void test4() throws InterruptedException {
+        final HashMap<String, Integer> map = new HashMap<>();
+
+        while (true) {
+
+            x = 0;
+            y = 0;
+
+            Thread thread1 = new Thread() {
+                @Override
+                public void run() {
+                    int a = x;
+                    y = 1;
+                    map.put("a", a);
+                }
+            };
+
+            Thread thread2 = new Thread() {
+                @Override
+                public void run() {
+                    int b = y;
+                    x = 1;
+                    map.put("b", b);
+                }
+            };
+
+            thread1.start();
+            thread2.start();
+
+            thread1.join();
+            thread2.join();
+
+            if (map.get("a") == 1 && map.get("b") == 1) {
+                System.out.println("a和b都为1");
+            }
+
+//            System.out.println("a : " + map.get("a") + ", b : " + map.get("b"));
+            map.clear();
+        }
     }
 }
